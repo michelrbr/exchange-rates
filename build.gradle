@@ -30,6 +30,7 @@ buildscript {
     // Test
     ext.junitVersion = '4.12'
     ext.junitXVersion = '1.1.0'
+    ext.mockkVersion = "1.9"
     ext.testRunnerVersion = '1.1.1'
     ext.testArchVersion = '2.0.0'
     ext.androidXTestCoreVersion = '1.1.0'
