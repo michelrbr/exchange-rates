@@ -5,6 +5,7 @@ import br.com.mxel.exchangerates.domain.SchedulerProvider
 import br.com.mxel.exchangerates.domain.State
 import br.com.mxel.exchangerates.domain.entity.Rates
 import br.com.mxel.exchangerates.domain.usecase.GetExchangeRatesPeriodically
+import br.com.mxel.exchangerates.presentation.util.EspressoIdlingResource
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
 import java.util.concurrent.TimeUnit
@@ -21,7 +22,7 @@ class ExchangeViewModel(
     val rates: LiveData<Rates?>
         get() = _rates
 
-    private val _loading = MutableLiveData<Boolean>().apply { value = false }
+    private val _loading = MutableLiveData<Boolean>().apply { value = true }
     val loading: LiveData<Boolean>
         get() = _loading
 
@@ -31,6 +32,7 @@ class ExchangeViewModel(
 
     init {
         lifecycleOwner.lifecycle.addObserver(this)
+        EspressoIdlingResource.increment()
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
@@ -41,6 +43,10 @@ class ExchangeViewModel(
             .observeOn(scheduler.mainThread)
             .subscribe { state ->
 
+                if ((state is State.Loading) && EspressoIdlingResource.countingIdlingResource.isIdleNow) {
+                    EspressoIdlingResource.increment()
+                }
+
                 if (_rates.value == null) {
                     _loading.value = state is State.Loading
                 }
@@ -49,6 +55,7 @@ class ExchangeViewModel(
                     is State.Data -> {
                         _rates.value = state.data.rates
                         _error.takeUnless { it.value == null }?.value = null
+                        EspressoIdlingResource.decrement()
                     }
                     is State.Error -> _error.value = state
                 }
