@@ -22,7 +22,7 @@ class ExchangeViewModel(
     val rates: LiveData<Rates?>
         get() = _rates
 
-    private val _loading = MutableLiveData<Boolean>().apply { value = true }
+    private val _loading = MutableLiveData<Boolean>().apply { value = false }
     val loading: LiveData<Boolean>
         get() = _loading
 
