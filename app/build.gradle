@@ -43,9 +43,9 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-extensions:$androidLifecycleVersion"
     kapt "androidx.lifecycle:lifecycle-compiler:$androidLifecycleVersion"
 
-    // SL
+    // DI
     implementation "org.koin:koin-core:$koinVersion"
-    implementation "org.koin:koin-android:$koinVersion"
+    implementation "org.koin:koin-core-ext:$koinVersion"
     implementation "org.koin:koin-android-viewmodel:$koinVersion"
 
     // Log

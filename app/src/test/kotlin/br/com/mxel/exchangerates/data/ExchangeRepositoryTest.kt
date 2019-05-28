@@ -10,9 +10,10 @@ import br.com.mxel.exchangerates.domain.entity.Rates
 import br.com.mxel.exchangerates.testModule
 import org.junit.Rule
 import org.junit.Test
-import org.koin.standalone.StandAloneContext
-import org.koin.standalone.inject
+import org.koin.core.context.startKoin
+import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
+import org.koin.test.inject
 import java.util.*
 
 class ExchangeRepositoryTest : BaseTest(), KoinTest {
@@ -23,10 +24,10 @@ class ExchangeRepositoryTest : BaseTest(), KoinTest {
     val rule = InstantTaskExecutorRule()
 
     override fun initialize() {
-        StandAloneContext.startKoin(listOf(testModule))
+        startKoin { modules(testModule) }
     }
 
-    override fun finish() = StandAloneContext.stopKoin()
+    override fun finish() = stopKoin()
 
     @Test
     fun `Exchange repository mapper test`() {

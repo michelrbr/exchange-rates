@@ -13,13 +13,14 @@ import io.mockk.confirmVerified
 import io.mockk.impl.annotations.RelaxedMockK
 import io.mockk.verifySequence
 import io.reactivex.schedulers.TestScheduler
-import junit.framework.Assert.assertTrue
+import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
+import org.koin.core.context.startKoin
+import org.koin.core.context.stopKoin
 import org.koin.core.parameter.parametersOf
-import org.koin.standalone.StandAloneContext
-import org.koin.standalone.inject
 import org.koin.test.KoinTest
+import org.koin.test.inject
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -39,10 +40,10 @@ class ExchangeViewModelTest : BaseTest(), KoinTest {
     val rule = InstantTaskExecutorRule()
 
     override fun initialize() {
-        StandAloneContext.startKoin(listOf(testModule))
+        startKoin { modules(testModule) }
     }
 
-    override fun finish() = StandAloneContext.stopKoin()
+    override fun finish() = stopKoin()
 
     @Test
     fun `Exchange view model test`() {

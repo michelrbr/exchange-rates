@@ -25,7 +25,7 @@ buildscript {
     ext.retrofitVersion = "2.5.0"
 
     // SL
-    ext.koinVersion = "1.0.2"
+    ext.koinVersion = "2.0.0"
 
     // Test
     ext.junitVersion = '4.12'

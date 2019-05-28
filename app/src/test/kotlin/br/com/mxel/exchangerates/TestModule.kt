@@ -12,16 +12,17 @@ import br.com.mxel.exchangerates.domain.usecase.GetExchangeRatesPeriodically
 import br.com.mxel.exchangerates.presentation.ExchangeViewModel
 import io.reactivex.Scheduler
 import io.reactivex.schedulers.TestScheduler
-import org.koin.android.viewmodel.ext.koin.viewModel
-import org.koin.dsl.module.module
-import org.koin.experimental.builder.create
+import org.koin.android.viewmodel.dsl.viewModel
+import org.koin.dsl.bind
+import org.koin.dsl.module
+import org.koin.experimental.builder.single
 import org.koin.experimental.builder.singleBy
 
 val testModule = module {
 
     viewModel { (lifecycleOwner: LifecycleOwner) -> ExchangeViewModel(lifecycleOwner, get(), get()) }
 
-    single { create<GetExchangeRatesPeriodically>() }
+    single<GetExchangeRatesPeriodically>()
 
     singleBy<ExchangeDataSource, ExchangeRepository>()
 
@@ -33,7 +34,7 @@ val testModule = module {
         ).createClient(ApiClient::class)
     }
 
-    single { create<SchedulerProvider>() }
+    single<SchedulerProvider>()
 
     single { TestScheduler() } bind Scheduler::class
 }
