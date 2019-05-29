@@ -3,7 +3,7 @@ package br.com.mxel.exchangerates.presentation
 import androidx.lifecycle.*
 import br.com.mxel.exchangerates.domain.SchedulerProvider
 import br.com.mxel.exchangerates.domain.State
-import br.com.mxel.exchangerates.domain.entity.Rates
+import br.com.mxel.exchangerates.domain.entity.Rate
 import br.com.mxel.exchangerates.domain.usecase.GetExchangeRatesPeriodically
 import br.com.mxel.exchangerates.presentation.util.EspressoIdlingResource
 import io.reactivex.disposables.CompositeDisposable
@@ -18,8 +18,8 @@ class ExchangeViewModel(
 
     private val disposable = CompositeDisposable()
 
-    private val _rates = MutableLiveData<Rates?>()
-    val rates: LiveData<Rates?>
+    private val _rates = MutableLiveData<List<Rate>?>()
+    val rates: LiveData<List<Rate>?>
         get() = _rates
 
     private val _loading = MutableLiveData<Boolean>().apply { value = false }

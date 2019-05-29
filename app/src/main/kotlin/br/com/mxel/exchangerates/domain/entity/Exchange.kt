@@ -1,7 +1,7 @@
 package br.com.mxel.exchangerates.domain.entity
 
 data class Exchange(
-    val base: String,
-    val rates: Rates,
+    val base: CurrencyCode,
+    val rates: List<Rate>,
     val date: String
 )

@@ -8,10 +8,12 @@ import androidx.lifecycle.Observer
 import br.com.mxel.exchangerates.R
 import br.com.mxel.exchangerates.data.remote.RemoteError
 import br.com.mxel.exchangerates.domain.State
-import br.com.mxel.exchangerates.domain.entity.Rates
+import br.com.mxel.exchangerates.domain.entity.CurrencyCode
+import br.com.mxel.exchangerates.domain.entity.Rate
 import io.reactivex.disposables.CompositeDisposable
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
+import timber.log.Timber
 
 class ExchangeActivity : AppCompatActivity() {
 
@@ -27,6 +29,10 @@ class ExchangeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.exchange_activity)
+
+        CurrencyCode.values().forEach {
+            Timber.d("%s : %s", it.name, Rate(it, 1.34))
+        }
 
         viewModel.rates.observe(this, Observer { showExchangeRates(it) })
         viewModel.error.observe(this, Observer { showErrorState(it) })
@@ -48,17 +54,19 @@ class ExchangeActivity : AppCompatActivity() {
         }
     }
 
-    private fun showExchangeRates(rates: Rates?) {
+    private fun showExchangeRates(rates: List<Rate>?) {
 
-        rates?.let {
+        rates?.let { rate ->
 
             errorLabel?.setVisibility(false)
             usdLabel?.setVisibility(true)
             plnLabel?.setVisibility(true)
             loading?.setVisibility(false)
 
-            usdLabel?.text = String.format(getString(R.string.currency_label), it.usd)
-            plnLabel?.text = String.format(getString(R.string.currency_label), it.pln)
+            usdLabel?.text =
+                String.format(getString(R.string.currency_label), rate.find { it.currencyCode == CurrencyCode.USD })
+            plnLabel?.text =
+                String.format(getString(R.string.currency_label), rate.find { it.currencyCode == CurrencyCode.PLN })
         }
     }
 

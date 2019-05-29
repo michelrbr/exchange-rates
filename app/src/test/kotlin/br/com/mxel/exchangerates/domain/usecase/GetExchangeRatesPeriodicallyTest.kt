@@ -3,16 +3,15 @@ package br.com.mxel.exchangerates.domain.usecase
 import br.com.mxel.exchangerates.BaseTest
 import br.com.mxel.exchangerates.domain.ExchangeDataSource
 import br.com.mxel.exchangerates.domain.State
-import br.com.mxel.exchangerates.domain.entity.Currency
+import br.com.mxel.exchangerates.domain.entity.CurrencyCode
 import br.com.mxel.exchangerates.domain.entity.Exchange
-import br.com.mxel.exchangerates.domain.entity.Rates
+import br.com.mxel.exchangerates.domain.entity.Rate
 import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.RelaxedMockK
 import io.reactivex.Observable
 import io.reactivex.schedulers.TestScheduler
 import org.junit.Test
-import java.util.*
 import java.util.concurrent.TimeUnit
 
 class GetExchangeRatesPeriodicallyTest : BaseTest() {
@@ -28,12 +27,15 @@ class GetExchangeRatesPeriodicallyTest : BaseTest() {
     @Test
     fun `Should get rates periodically`() {
 
-        val usd = Currency("USD", 1.1187, Locale.US.toLanguageTag())
-        val pln = Currency("PLN", 4.2974, "pl-PL")
+        val usd = Rate(CurrencyCode.USD, 1.1187)
+        val pln = Rate(CurrencyCode.PLN, 4.2974)
 
         val expectedValue = Exchange(
-            "EUR",
-            Rates(usd, pln),
+            CurrencyCode.EUR,
+            listOf(
+                usd,
+                pln
+            ),
             "2019-05-26"
         )
 

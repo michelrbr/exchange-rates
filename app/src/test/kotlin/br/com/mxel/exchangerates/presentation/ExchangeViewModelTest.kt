@@ -6,8 +6,8 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LifecycleRegistry
 import androidx.lifecycle.Observer
 import br.com.mxel.exchangerates.BaseTest
-import br.com.mxel.exchangerates.domain.entity.Currency
-import br.com.mxel.exchangerates.domain.entity.Rates
+import br.com.mxel.exchangerates.domain.entity.CurrencyCode
+import br.com.mxel.exchangerates.domain.entity.Rate
 import br.com.mxel.exchangerates.testModule
 import io.mockk.confirmVerified
 import io.mockk.impl.annotations.RelaxedMockK
@@ -21,7 +21,6 @@ import org.koin.core.context.stopKoin
 import org.koin.core.parameter.parametersOf
 import org.koin.test.KoinTest
 import org.koin.test.inject
-import java.util.*
 import java.util.concurrent.TimeUnit
 
 class ExchangeViewModelTest : BaseTest(), KoinTest {
@@ -48,8 +47,8 @@ class ExchangeViewModelTest : BaseTest(), KoinTest {
     @Test
     fun `Exchange view model test`() {
 
-        val usd = Currency("USD", 1.1187, Locale.US.toLanguageTag())
-        val pln = Currency("PLN", 4.2974, "pl-PL")
+        val usd = Rate(CurrencyCode.USD, 1.1187)
+        val pln = Rate(CurrencyCode.PLN, 4.2974)
 
         val lifecycle = LifecycleRegistry(lifecycleOwner).apply {
             // Need to add viewModel as a lifecycle observable, looks like mocked lifecycleOwner doesn't work properly
@@ -70,8 +69,8 @@ class ExchangeViewModelTest : BaseTest(), KoinTest {
 
         scheduler.advanceTimeBy(1, TimeUnit.MINUTES)
 
-        assertTrue((viewModel.rates.value as Rates).usd.toString() == usd.toString())
-        assertTrue((viewModel.rates.value as Rates).pln.toString() == pln.toString())
+        assertTrue(viewModel.rates.value?.find { it.currencyCode == CurrencyCode.USD }?.toString() == usd.toString())
+        assertTrue(viewModel.rates.value?.find { it.currencyCode == CurrencyCode.PLN }?.toString() == pln.toString())
 
         confirmVerified(loadingObserver)
     }

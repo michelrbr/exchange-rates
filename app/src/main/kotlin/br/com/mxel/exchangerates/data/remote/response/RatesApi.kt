@@ -1,8 +1,8 @@
 package br.com.mxel.exchangerates.data.remote.response
 
 import br.com.mxel.exchangerates.domain.DomainMapper
-import br.com.mxel.exchangerates.domain.entity.Currency
-import br.com.mxel.exchangerates.domain.entity.Rates
+import br.com.mxel.exchangerates.domain.entity.CurrencyCode
+import br.com.mxel.exchangerates.domain.entity.Rate
 import com.squareup.moshi.Json
 import java.util.*
 
@@ -10,16 +10,19 @@ data class RatesApi(
     @Json(name = "USD")
     val usd: Double,
     @Json(name = "PLN")
-    val pnl: Double
-) : DomainMapper<Rates> {
+    val pln: Double
+) : DomainMapper<List<Rate>> {
 
-    override fun toDomain() = Rates(
-        Currency(Identifier.USD.id, usd, Identifier.USD.lagTag),
-        Currency(Identifier.PLN.id, pnl, Identifier.PLN.lagTag)
-    )
+    override fun toDomain(): List<Rate> {
 
-    enum class Identifier(val id: String, val lagTag: String) {
-        USD("USD", Locale.US.toLanguageTag()),
-        PLN("PLN", "pl-PL")
+        return listOf(
+            Rate(CurrencyCode.USD, usd),
+            Rate(CurrencyCode.PLN, pln)
+        )
+    }
+
+    enum class Identifier(val langId: String) {
+        USD(Locale.US.toLanguageTag()),
+        PLN("pl-PL")
     }
 }
