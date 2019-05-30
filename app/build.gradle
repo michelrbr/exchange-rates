@@ -39,6 +39,7 @@ dependencies {
 
     // Android
     implementation "androidx.appcompat:appcompat:$appcompatVersion"
+    implementation "androidx.recyclerview:recyclerview:$androidSupportVersion"
     implementation "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
     implementation "androidx.lifecycle:lifecycle-extensions:$androidLifecycleVersion"
     kapt "androidx.lifecycle:lifecycle-compiler:$androidLifecycleVersion"

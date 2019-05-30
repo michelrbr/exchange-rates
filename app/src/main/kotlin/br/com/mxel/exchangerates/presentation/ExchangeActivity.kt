@@ -5,15 +5,18 @@ import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import br.com.mxel.exchangerates.R
 import br.com.mxel.exchangerates.data.remote.RemoteError
 import br.com.mxel.exchangerates.domain.State
-import br.com.mxel.exchangerates.domain.entity.CurrencyCode
-import br.com.mxel.exchangerates.domain.entity.Rate
+import br.com.mxel.exchangerates.domain.entity.Exchange
+import br.com.mxel.exchangerates.presentation.widget.RateAdapter
 import io.reactivex.disposables.CompositeDisposable
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
-import timber.log.Timber
+import java.text.SimpleDateFormat
+import java.util.*
 
 class ExchangeActivity : AppCompatActivity() {
 
@@ -21,8 +24,16 @@ class ExchangeActivity : AppCompatActivity() {
 
     private val viewModel: ExchangeViewModel by viewModel { parametersOf(this) }
 
-    private val usdLabel: AppCompatTextView? by lazy { findViewById<AppCompatTextView>(R.id.usd_text_view) }
-    private val plnLabel: AppCompatTextView? by lazy { findViewById<AppCompatTextView>(R.id.pln_text_view) }
+    private val rateAdapter: RateAdapter by lazy { RateAdapter() }
+
+    private val baseCurrencyLabel: AppCompatTextView? by lazy { findViewById<AppCompatTextView>(R.id.base_currency_text_view) }
+    private val rateList: RecyclerView? by lazy {
+        findViewById<RecyclerView>(R.id.rates_recycler_view).apply {
+            setHasFixedSize(true)
+            layoutManager = LinearLayoutManager(context)
+            adapter = rateAdapter
+        }
+    }
     private val errorLabel: AppCompatTextView? by lazy { findViewById<AppCompatTextView>(R.id.error_text_view) }
     private val loading: ProgressBar? by lazy { findViewById<ProgressBar>(R.id.loading) }
 
@@ -30,11 +41,7 @@ class ExchangeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.exchange_activity)
 
-        CurrencyCode.values().forEach {
-            Timber.d("%s : %s", it.name, Rate(it, 1.34))
-        }
-
-        viewModel.rates.observe(this, Observer { showExchangeRates(it) })
+        viewModel.exchange.observe(this, Observer { showExchangeRates(it) })
         viewModel.error.observe(this, Observer { showErrorState(it) })
         viewModel.loading.observe(this, Observer { if (it) showLoadingState() })
     }
@@ -43,8 +50,8 @@ class ExchangeActivity : AppCompatActivity() {
 
         error?.let {
 
-            usdLabel?.setVisibility(false)
-            plnLabel?.setVisibility(false)
+            baseCurrencyLabel?.setVisibility(false)
+            rateList?.setVisibility(false)
             loading?.setVisibility(false)
             errorLabel?.setVisibility(true)
             errorLabel?.text = when (it.error) {
@@ -54,27 +61,30 @@ class ExchangeActivity : AppCompatActivity() {
         }
     }
 
-    private fun showExchangeRates(rates: List<Rate>?) {
+    private fun showExchangeRates(exchange: Exchange?) {
 
-        rates?.let { rate ->
+        exchange?.let {
 
             errorLabel?.setVisibility(false)
-            usdLabel?.setVisibility(true)
-            plnLabel?.setVisibility(true)
+            baseCurrencyLabel?.setVisibility(true)
+            rateList?.setVisibility(true)
             loading?.setVisibility(false)
 
-            usdLabel?.text =
-                String.format(getString(R.string.currency_label), rate.find { it.currencyCode == CurrencyCode.USD })
-            plnLabel?.text =
-                String.format(getString(R.string.currency_label), rate.find { it.currencyCode == CurrencyCode.PLN })
+            baseCurrencyLabel?.text = Currency.getInstance(it.base.locale).displayName
+            baseCurrencyLabel?.text = String.format(
+                getString(R.string.currency_label),
+                Currency.getInstance(it.base.locale).displayName,
+                SimpleDateFormat("d MMM yyyy", Locale.getDefault()).format(it.date.time)
+            )
+            rateAdapter.submitList(it.rates)
         }
     }
 
     private fun showLoadingState() {
 
         errorLabel?.setVisibility(false)
-        usdLabel?.setVisibility(false)
-        plnLabel?.setVisibility(false)
+        baseCurrencyLabel?.setVisibility(false)
+        rateList?.setVisibility(false)
         loading?.setVisibility(true)
     }
 

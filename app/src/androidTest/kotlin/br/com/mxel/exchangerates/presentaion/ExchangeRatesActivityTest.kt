@@ -34,10 +34,9 @@ class ExchangeRatesActivityTest {
         ActivityScenario.launch(ExchangeActivity::class.java)
 
         onView(withId(R.id.loading)).check(matches(not(isDisplayed())))
-        onView(withId(R.id.usd_text_view)).check(matches(isDisplayed()))
-        onView(withId(R.id.usd_text_view)).check(matches(not(withText(""))))
-        onView(withId(R.id.pln_text_view)).check(matches(isDisplayed()))
-        onView(withId(R.id.pln_text_view)).check(matches(not(withText(""))))
+        onView(withId(R.id.rates_recycler_view)).check(matches(isDisplayed()))
+        onView(withId(R.id.base_currency_text_view)).check(matches(isDisplayed()))
+        onView(withId(R.id.base_currency_text_view)).check(matches(not(withText(""))))
         onView(withId(R.id.error_text_view)).check(matches(not(isDisplayed())))
         onView(withId(R.id.error_text_view)).check(matches(withText("")))
     }

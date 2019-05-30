@@ -3,7 +3,7 @@ package br.com.mxel.exchangerates.presentation
 import androidx.lifecycle.*
 import br.com.mxel.exchangerates.domain.SchedulerProvider
 import br.com.mxel.exchangerates.domain.State
-import br.com.mxel.exchangerates.domain.entity.Rate
+import br.com.mxel.exchangerates.domain.entity.Exchange
 import br.com.mxel.exchangerates.domain.usecase.GetExchangeRatesPeriodically
 import br.com.mxel.exchangerates.presentation.util.EspressoIdlingResource
 import io.reactivex.disposables.CompositeDisposable
@@ -18,9 +18,9 @@ class ExchangeViewModel(
 
     private val disposable = CompositeDisposable()
 
-    private val _rates = MutableLiveData<List<Rate>?>()
-    val rates: LiveData<List<Rate>?>
-        get() = _rates
+    private val _exchange = MutableLiveData<Exchange?>()
+    val exchange: LiveData<Exchange?>
+        get() = _exchange
 
     private val _loading = MutableLiveData<Boolean>().apply { value = false }
     val loading: LiveData<Boolean>
@@ -43,20 +43,17 @@ class ExchangeViewModel(
             .observeOn(scheduler.mainThread)
             .subscribe { state ->
 
-                if ((state is State.Loading) && EspressoIdlingResource.countingIdlingResource.isIdleNow) {
-                    EspressoIdlingResource.increment()
-                }
-
-                if (_rates.value == null) {
+                if (_exchange.value == null) {
                     _loading.value = state is State.Loading
                 }
 
                 when (state) {
                     is State.Data -> {
-                        _rates.value = state.data.rates
+                        _exchange.value = state.data
                         _error.takeUnless { it.value == null }?.value = null
                         EspressoIdlingResource.decrement()
                     }
+                    is State.Loading -> EspressoIdlingResource.takeIf { it.countingIdlingResource.isIdleNow }?.increment()
                     is State.Error -> _error.value = state
                 }
             }
