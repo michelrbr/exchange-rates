@@ -18,6 +18,6 @@ class GetExchangeRatesPeriodically(
     ): Observable<State<Exchange>> {
 
         return Observable.interval(0, time, timeUnit, scheduler)
-            .flatMap { Observable.concat(Observable.just(State.loading()), dateSource.fetchCurrencyExchange()) }
+            .flatMap { Observable.concat(Observable.just(State.loading()), dateSource.fetchExchangeRates()) }
     }
 }

@@ -12,6 +12,8 @@ import io.mockk.impl.annotations.RelaxedMockK
 import io.reactivex.Observable
 import io.reactivex.schedulers.TestScheduler
 import org.junit.Test
+import java.text.SimpleDateFormat
+import java.util.*
 import java.util.concurrent.TimeUnit
 
 class GetExchangeRatesPeriodicallyTest : BaseTest() {
@@ -27,19 +29,16 @@ class GetExchangeRatesPeriodicallyTest : BaseTest() {
     @Test
     fun `Should get rates periodically`() {
 
-        val usd = Rate(CurrencyCode.USD, 1.1187)
-        val pln = Rate(CurrencyCode.PLN, 4.2974)
+        val usd = Rate(CurrencyCode.USD, 1.1192)
+        val pln = Rate(CurrencyCode.PLN, 4.2951)
 
         val expectedValue = Exchange(
             CurrencyCode.EUR,
-            listOf(
-                usd,
-                pln
-            ),
-            "2019-05-26"
+            listOf(usd, pln),
+            SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse("2019-05-28")
         )
 
-        every { dataSource.fetchCurrencyExchange() } returns
+        every { dataSource.fetchExchangeRates() } returns
                 Observable.just(State.data(expectedValue))
 
         val observable = useCase.execute(1, TimeUnit.MINUTES, scheduler)
