@@ -1,5 +1,5 @@
 package br.com.mxel.exchangerates.domain
 
-interface DomainMapper<T> {
+interface ToDomainMapper<T> {
     fun toDomain(): T
 }

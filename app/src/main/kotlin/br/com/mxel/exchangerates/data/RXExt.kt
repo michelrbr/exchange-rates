@@ -2,8 +2,8 @@ package br.com.mxel.exchangerates.data
 
 import br.com.mxel.exchangerates.data.remote.RemoteError
 import br.com.mxel.exchangerates.data.remote.response.ErrorApi
-import br.com.mxel.exchangerates.domain.DomainMapper
 import br.com.mxel.exchangerates.domain.State
+import br.com.mxel.exchangerates.domain.ToDomainMapper
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import io.reactivex.Single
@@ -11,7 +11,7 @@ import retrofit2.HttpException
 import java.io.IOException
 import java.net.UnknownHostException
 
-fun <T : DomainMapper<R>, R> Single<T>.mapToState(): Single<State<R>> = this
+fun <T : ToDomainMapper<R>, R> Single<T>.mapToState(): Single<State<R>> = this
     .map { State.data(it.toDomain()) }
     .onErrorReturn { throwable ->
         when (throwable) {

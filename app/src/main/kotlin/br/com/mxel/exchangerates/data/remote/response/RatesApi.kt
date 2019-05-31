@@ -1,6 +1,6 @@
 package br.com.mxel.exchangerates.data.remote.response
 
-import br.com.mxel.exchangerates.domain.DomainMapper
+import br.com.mxel.exchangerates.domain.ToDomainMapper
 import br.com.mxel.exchangerates.domain.entity.CurrencyCode
 import br.com.mxel.exchangerates.domain.entity.Rate
 import com.squareup.moshi.Json
@@ -63,26 +63,17 @@ data class RatesApi(
     val cny: Double? = null,
     @Json(name = "SEK")
     val sek: Double? = null
-) : DomainMapper<List<Rate>> {
+) : ToDomainMapper<List<Rate>> {
 
     override fun toDomain(): List<Rate> {
 
-        val list = ArrayList<Rate>()
-
-        javaClass.kotlin.memberProperties.forEach {
-            if (it.get(this) != null) {
-                list.add(
-                    Rate(
-                        CurrencyCode.valueOf(it.name.toUpperCase()),
-                        it.get(this) as Double
-                    )
+        return javaClass.kotlin.memberProperties.fold(listOf()) { acc, r ->
+            r.get(this)?.let {
+                acc + Rate(
+                    CurrencyCode.valueOf(r.name.toUpperCase()),
+                    it as Double
                 )
-            }
-            it.get(this).toString()
+            } ?: acc
         }
-
-        return list
     }
-
-
 }
