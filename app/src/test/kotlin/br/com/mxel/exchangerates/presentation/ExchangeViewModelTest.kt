@@ -8,6 +8,7 @@ import androidx.lifecycle.Observer
 import br.com.mxel.exchangerates.BaseTest
 import br.com.mxel.exchangerates.domain.entity.CurrencyCode
 import br.com.mxel.exchangerates.domain.entity.Rate
+import br.com.mxel.exchangerates.presentation.entity.RateShow
 import br.com.mxel.exchangerates.testModule
 import io.mockk.confirmVerified
 import io.mockk.impl.annotations.RelaxedMockK
@@ -75,7 +76,7 @@ class ExchangeViewModelTest : BaseTest(), KoinTest {
             Rate(CurrencyCode.TRY, 6.753),
             Rate(CurrencyCode.USD, 1.1192),
             Rate(CurrencyCode.ZAR, 16.3494)
-        )
+        ).map { RateShow.fromDomain(it) }
 
         val lifecycle = LifecycleRegistry(lifecycleOwner).apply {
             // Need to add viewModel as a lifecycle observable, looks like mocked lifecycleOwner doesn't work properly
@@ -98,7 +99,7 @@ class ExchangeViewModelTest : BaseTest(), KoinTest {
 
         // Compare all items of lists
         assertTrue(viewModel.exchange.value?.rates?.map { rate ->
-            rate == list.find { it.currencyCode == rate.currencyCode }
+            rate == list.find { it.currencyName == rate.currencyName }
         }?.reduce { acc, b -> acc && b } ?: false)
 
         confirmVerified(loadingObserver)

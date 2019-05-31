@@ -1,4 +1,4 @@
-package br.com.mxel.exchangerates.presentation
+package br.com.mxel.exchangerates.presentation.extension
 
 import android.view.View
 

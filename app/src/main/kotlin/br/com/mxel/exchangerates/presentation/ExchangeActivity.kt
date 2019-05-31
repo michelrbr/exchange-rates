@@ -10,13 +10,12 @@ import androidx.recyclerview.widget.RecyclerView
 import br.com.mxel.exchangerates.R
 import br.com.mxel.exchangerates.data.remote.RemoteError
 import br.com.mxel.exchangerates.domain.State
-import br.com.mxel.exchangerates.domain.entity.Exchange
+import br.com.mxel.exchangerates.presentation.entity.ExchangeShow
+import br.com.mxel.exchangerates.presentation.extension.setVisibility
 import br.com.mxel.exchangerates.presentation.widget.RateAdapter
 import io.reactivex.disposables.CompositeDisposable
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
-import java.text.SimpleDateFormat
-import java.util.*
 
 class ExchangeActivity : AppCompatActivity() {
 
@@ -61,7 +60,7 @@ class ExchangeActivity : AppCompatActivity() {
         }
     }
 
-    private fun showExchangeRates(exchange: Exchange?) {
+    private fun showExchangeRates(exchange: ExchangeShow?) {
 
         exchange?.let {
 
@@ -70,11 +69,10 @@ class ExchangeActivity : AppCompatActivity() {
             rateList?.setVisibility(true)
             loading?.setVisibility(false)
 
-            baseCurrencyLabel?.text = Currency.getInstance(it.base.locale).displayName
             baseCurrencyLabel?.text = String.format(
                 getString(R.string.currency_label),
-                Currency.getInstance(it.base.locale).displayName,
-                SimpleDateFormat("d MMM yyyy", Locale.getDefault()).format(it.date.time)
+                exchange.currencyName,
+                exchange.date
             )
             rateAdapter.submitList(it.rates)
         }

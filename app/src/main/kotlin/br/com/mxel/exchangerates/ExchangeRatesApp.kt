@@ -1,7 +1,7 @@
 package br.com.mxel.exchangerates
 
 import android.app.Application
-import br.com.mxel.exchangerates.presentation.appModule
+import br.com.mxel.exchangerates.presentation.di.appModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin

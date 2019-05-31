@@ -11,7 +11,7 @@ data class ExchangeApi(
     val rates: RatesApi,
     val date: String
 ) : ToDomainMapper<Exchange> {
-    
+
     override fun toDomain() = Exchange(
         base,
         rates.toDomain(),

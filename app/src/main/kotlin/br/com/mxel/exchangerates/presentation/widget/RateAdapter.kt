@@ -4,11 +4,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import br.com.mxel.exchangerates.R
-import br.com.mxel.exchangerates.domain.entity.Rate
+import br.com.mxel.exchangerates.presentation.entity.RateShow
 
 class RateAdapter : RecyclerView.Adapter<RateViewHolder>() {
 
-    private var rates: List<Rate>? = null
+    private var rates: List<RateShow>? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RateViewHolder {
 
@@ -24,7 +24,7 @@ class RateAdapter : RecyclerView.Adapter<RateViewHolder>() {
         }
     }
 
-    fun submitList(rateList: List<Rate>) {
+    fun submitList(rateList: List<RateShow>) {
         rates = rateList
         notifyDataSetChanged()
     }

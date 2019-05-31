@@ -1,4 +1,4 @@
-package br.com.mxel.exchangerates.presentation
+package br.com.mxel.exchangerates.presentation.di
 
 import androidx.lifecycle.LifecycleOwner
 import br.com.mxel.exchangerates.BuildConfig
@@ -9,6 +9,7 @@ import br.com.mxel.exchangerates.data.remote.RemoteClientFactory
 import br.com.mxel.exchangerates.domain.ExchangeDataSource
 import br.com.mxel.exchangerates.domain.SchedulerProvider
 import br.com.mxel.exchangerates.domain.usecase.GetExchangeRatesPeriodically
+import br.com.mxel.exchangerates.presentation.ExchangeViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import org.koin.android.viewmodel.dsl.viewModel
@@ -19,7 +20,13 @@ import org.koin.experimental.builder.singleBy
 val appModule = module {
 
     // Create ExchangeViewModel to app
-    viewModel { (lifecycleOwner: LifecycleOwner) -> ExchangeViewModel(lifecycleOwner, get(), get()) }
+    viewModel { (lifecycleOwner: LifecycleOwner) ->
+        ExchangeViewModel(
+            lifecycleOwner,
+            get(),
+            get()
+        )
+    }
 
     // Create GetExchangeRatesPeriodically to ExchangeViewModel
     single<GetExchangeRatesPeriodically>()

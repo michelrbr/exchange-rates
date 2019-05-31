@@ -3,8 +3,8 @@ package br.com.mxel.exchangerates.presentation
 import androidx.lifecycle.*
 import br.com.mxel.exchangerates.domain.SchedulerProvider
 import br.com.mxel.exchangerates.domain.State
-import br.com.mxel.exchangerates.domain.entity.Exchange
 import br.com.mxel.exchangerates.domain.usecase.GetExchangeRatesPeriodically
+import br.com.mxel.exchangerates.presentation.entity.ExchangeShow
 import br.com.mxel.exchangerates.presentation.util.EspressoIdlingResource
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
@@ -18,8 +18,8 @@ class ExchangeViewModel(
 
     private val disposable = CompositeDisposable()
 
-    private val _exchange = MutableLiveData<Exchange?>()
-    val exchange: LiveData<Exchange?>
+    private val _exchange = MutableLiveData<ExchangeShow?>()
+    val exchange: LiveData<ExchangeShow?>
         get() = _exchange
 
     private val _loading = MutableLiveData<Boolean>().apply { value = false }
@@ -40,6 +40,15 @@ class ExchangeViewModel(
         getCurrencyExchangePeriodically
             .execute(1, TimeUnit.MINUTES, scheduler.backgroundThread)
             .subscribeOn(scheduler.backgroundThread)
+            .map {
+                // Map to presentation entity
+                when (it) {
+                    is State.Data -> State.data(ExchangeShow.fromDomain(it.data))
+                    is State.Error -> State.error(it.error, it.cause)
+                    is State.Loading -> State.loading()
+                    else -> State.idle()
+                }
+            }
             .observeOn(scheduler.mainThread)
             .subscribe { state ->
 

@@ -3,7 +3,7 @@ package br.com.mxel.exchangerates.domain.entity
 import org.junit.Assert
 import org.junit.Test
 
-class CurrencyTest {
+class EntitiesTest {
 
     @Test
     fun `Rate to string test`() {
