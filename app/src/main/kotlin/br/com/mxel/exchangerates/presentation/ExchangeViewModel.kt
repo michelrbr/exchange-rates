@@ -3,11 +3,14 @@ package br.com.mxel.exchangerates.presentation
 import androidx.lifecycle.*
 import br.com.mxel.exchangerates.domain.SchedulerProvider
 import br.com.mxel.exchangerates.domain.State
+import br.com.mxel.exchangerates.domain.entity.CurrencyCode
 import br.com.mxel.exchangerates.domain.usecase.GetExchangeRatesPeriodically
 import br.com.mxel.exchangerates.presentation.entity.ExchangeShow
 import br.com.mxel.exchangerates.presentation.util.EspressoIdlingResource
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
+import java.lang.IllegalArgumentException
+import java.util.*
 import java.util.concurrent.TimeUnit
 
 class ExchangeViewModel(
@@ -17,6 +20,14 @@ class ExchangeViewModel(
 ) : ViewModel(), LifecycleObserver {
 
     private val disposable = CompositeDisposable()
+
+    private var updateTime: Long = 1L
+
+    private var updateTimeUnit: TimeUnit = TimeUnit.MINUTES
+
+    private var currentCurrency: CurrencyCode? = null
+
+    private var currentCurrencies: List<CurrencyCode>? = null
 
     private val _exchange = MutableLiveData<ExchangeShow?>()
     val exchange: LiveData<ExchangeShow?>
@@ -31,14 +42,30 @@ class ExchangeViewModel(
         get() = _error
 
     init {
+        currentCurrency = try {
+            CurrencyCode.valueOf(Currency.getInstance(Locale.getDefault()).currencyCode)
+        } catch (ie: IllegalArgumentException) {
+            CurrencyCode.EUR
+        }
         lifecycleOwner.lifecycle.addObserver(this)
         EspressoIdlingResource.increment()
+    }
+
+    override fun onCleared() {
+        lifecycleOwner.lifecycle.removeObserver(this)
+        onClearDisposable()
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     fun getCurrencyExchange() {
         getCurrencyExchangePeriodically
-            .execute(1, TimeUnit.MINUTES, scheduler.backgroundThread)
+            .execute(
+                currentCurrency,
+                currentCurrencies,
+                updateTime,
+                updateTimeUnit,
+                scheduler.backgroundThread
+            )
             .subscribeOn(scheduler.backgroundThread)
             .map {
                 // Map to presentation entity
@@ -72,10 +99,5 @@ class ExchangeViewModel(
     @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
     fun onClearDisposable() {
         disposable.clear()
-    }
-
-    override fun onCleared() {
-        lifecycleOwner.lifecycle.removeObserver(this)
-        onClearDisposable()
     }
 }

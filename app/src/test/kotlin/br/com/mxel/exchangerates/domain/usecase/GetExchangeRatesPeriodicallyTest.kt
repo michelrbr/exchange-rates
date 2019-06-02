@@ -38,10 +38,10 @@ class GetExchangeRatesPeriodicallyTest : BaseTest() {
             SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse("2019-05-28")
         )
 
-        every { dataSource.fetchExchangeRates() } returns
+        every { dataSource.fetchExchangeRates(CurrencyCode.EUR) } returns
                 Observable.just(State.data(expectedValue))
 
-        val observable = useCase.execute(1, TimeUnit.MINUTES, scheduler)
+        val observable = useCase.execute(CurrencyCode.EUR, null,1, TimeUnit.MINUTES, scheduler)
             .subscribeOn(scheduler)
             .observeOn(scheduler)
             .test()

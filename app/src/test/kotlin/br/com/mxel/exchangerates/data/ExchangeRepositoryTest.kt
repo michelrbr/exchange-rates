@@ -69,16 +69,18 @@ class ExchangeRepositoryTest : BaseTest(), KoinTest {
             SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse("2019-05-28")
         )
 
-        repository.fetchExchangeRates()
+        repository.fetchExchangeRates(CurrencyCode.EUR)
             .test()
             .assertValue { state ->
                 (state as? State.Data)?.let { data ->
+
                     data.data.base == expectedValue.base
-                            && data.data.rates.map { rate ->
+                    // Transform rate list into a boolean list and verify if all items is true
+                    && data.data.rates.map { rate ->
                         rate == expectedValue.rates.find { it.currencyCode == rate.currencyCode }
-                    }
-                        .reduce { acc, b -> acc && b }
-                            && data.data.date == expectedValue.date
+                    }.reduce { acc, b -> acc && b }
+
+                    && data.data.date == expectedValue.date
                 } ?: false
             }
     }

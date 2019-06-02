@@ -6,5 +6,8 @@ import io.reactivex.Observable
 
 interface ExchangeDataSource {
 
-    fun fetchExchangeRates(base: CurrencyCode? = null): Observable<State<Exchange>>
+    fun fetchExchangeRates(
+        baseCurrency: CurrencyCode,
+        currencies: List<CurrencyCode>? = null
+    ): Observable<State<Exchange>>
 }

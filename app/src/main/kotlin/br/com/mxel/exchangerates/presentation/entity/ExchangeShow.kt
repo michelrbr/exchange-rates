@@ -14,7 +14,10 @@ data class ExchangeShow(
         override fun fromDomain(from: Exchange): ExchangeShow {
             return ExchangeShow(
                 Currency.getInstance(from.base.locale).displayName,
-                from.rates.map { RateShow.fromDomain(it) },
+                from.rates.fold(listOf()) { acc, rate ->
+                    // Exclude base currency from the list
+                    if (rate.currencyCode != from.base)  acc + RateShow.fromDomain(rate) else acc
+                },
                 SimpleDateFormat("d MMM yyyy", Locale.getDefault()).format(from.date.time)
             )
         }

@@ -69,10 +69,7 @@ data class RatesApi(
 
         return javaClass.kotlin.memberProperties.fold(listOf()) { acc, r ->
             (r.get(this) as? Double)?.let {
-                acc + Rate(
-                    CurrencyCode.valueOf(r.name.toUpperCase()),
-                    it
-                )
+                acc + Rate(CurrencyCode.valueOf(r.name.toUpperCase()), it)
             } ?: acc
         }
     }

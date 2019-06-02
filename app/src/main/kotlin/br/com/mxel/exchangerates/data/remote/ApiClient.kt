@@ -11,7 +11,7 @@ interface ApiClient {
 
     @GET("latest")
     fun fetchExchangeRates(
-        @Query("base") base: String? = "",
-        @Query("symbols") symbols: String? = ""
+        @Query("base") baseCurrency: String? = "",
+        @Query("symbols") currencies: String? = ""
     ): Single<ExchangeApi>
 }

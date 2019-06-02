@@ -9,8 +9,13 @@ import io.reactivex.Observable
 
 class ExchangeRepository(private val apiClient: ApiClient) : ExchangeDataSource {
 
-    override fun fetchExchangeRates(base: CurrencyCode?): Observable<State<Exchange>> {
+    override fun fetchExchangeRates(
+        baseCurrency: CurrencyCode,
+        currencies: List<CurrencyCode>?
+    ): Observable<State<Exchange>> {
 
-        return apiClient.fetchExchangeRates(base?.name).mapToState().toObservable()
+        return apiClient.fetchExchangeRates(
+            baseCurrency.name, currencies?.joinToString(",") { it.name.toUpperCase() }
+        ).mapToState().toObservable()
     }
 }

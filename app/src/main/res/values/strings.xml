@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">Exchange Rates</string>
-    <string name="currency_label">%s foreign exchange reference rates %s</string>
+    <string name="app_name" translatable="false">Exchange Rates</string>
+    <string name="currency_label">Reference values for %s: %s</string>
     <string name="connection_lost">There\'s no internet connection</string>
     <string name="generic_error">Sorry, an error has occurred</string>
 </resources>

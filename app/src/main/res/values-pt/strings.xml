@@ -1,0 +1,5 @@
+<resources>
+    <string name="currency_label">Valores equivalente a %s: %s</string>
+    <string name="connection_lost">Não ha conexão com a internet</string>
+    <string name="generic_error">Desculpe, ocorreu um erro.</string>
+</resources>
