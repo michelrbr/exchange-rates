@@ -1,10 +1,11 @@
-package br.com.mxel.exchangerates.data
+package br.com.mxel.exchangerates.data.rates
 
-import br.com.mxel.exchangerates.data.remote.ApiClient
-import br.com.mxel.exchangerates.domain.ExchangeDataSource
+import br.com.mxel.exchangerates.data.mapToState
+import br.com.mxel.exchangerates.data.rates.remote.ApiClient
 import br.com.mxel.exchangerates.domain.State
-import br.com.mxel.exchangerates.domain.entity.CurrencyCode
-import br.com.mxel.exchangerates.domain.entity.Exchange
+import br.com.mxel.exchangerates.domain.rates.ExchangeDataSource
+import br.com.mxel.exchangerates.domain.rates.entity.CurrencyCode
+import br.com.mxel.exchangerates.domain.rates.entity.Exchange
 import io.reactivex.Observable
 
 class ExchangeRepository(private val apiClient: ApiClient) : ExchangeDataSource {

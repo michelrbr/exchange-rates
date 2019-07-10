@@ -1,4 +1,4 @@
-package br.com.mxel.exchangerates.domain.entity
+package br.com.mxel.exchangerates.domain.rates.entity
 
 import org.junit.Assert
 import org.junit.Test

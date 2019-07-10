@@ -1,8 +1,8 @@
-package br.com.mxel.exchangerates.presentation.entity
+package br.com.mxel.exchangerates.presentation.rates.entity
 
 import br.com.mxel.exchangerates.domain.FromDomainMapper
-import br.com.mxel.exchangerates.domain.entity.CurrencyCode
-import br.com.mxel.exchangerates.domain.entity.Rate
+import br.com.mxel.exchangerates.domain.rates.entity.CurrencyCode
+import br.com.mxel.exchangerates.domain.rates.entity.Rate
 
 data class RateShow(
     val currencyName: String,

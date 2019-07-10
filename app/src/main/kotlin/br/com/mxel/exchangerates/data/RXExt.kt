@@ -1,7 +1,7 @@
 package br.com.mxel.exchangerates.data
 
+import br.com.mxel.exchangerates.data.rates.remote.response.ErrorApi
 import br.com.mxel.exchangerates.data.remote.RemoteError
-import br.com.mxel.exchangerates.data.remote.response.ErrorApi
 import br.com.mxel.exchangerates.domain.State
 import br.com.mxel.exchangerates.domain.ToDomainMapper
 import com.squareup.moshi.Moshi

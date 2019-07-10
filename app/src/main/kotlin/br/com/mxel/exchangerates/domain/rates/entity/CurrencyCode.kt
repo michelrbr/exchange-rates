@@ -1,4 +1,4 @@
-package br.com.mxel.exchangerates.domain.entity
+package br.com.mxel.exchangerates.domain.rates.entity
 
 import java.util.*
 

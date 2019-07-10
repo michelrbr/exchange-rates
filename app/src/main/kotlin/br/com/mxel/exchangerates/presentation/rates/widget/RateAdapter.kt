@@ -1,10 +1,10 @@
-package br.com.mxel.exchangerates.presentation.widget
+package br.com.mxel.exchangerates.presentation.rates.widget
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import br.com.mxel.exchangerates.R
-import br.com.mxel.exchangerates.presentation.entity.RateShow
+import br.com.mxel.exchangerates.presentation.rates.entity.RateShow
 
 class RateAdapter : RecyclerView.Adapter<RateViewHolder>() {
 

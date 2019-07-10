@@ -6,9 +6,10 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LifecycleRegistry
 import androidx.lifecycle.Observer
 import br.com.mxel.exchangerates.BaseTest
-import br.com.mxel.exchangerates.domain.entity.CurrencyCode
-import br.com.mxel.exchangerates.domain.entity.Rate
-import br.com.mxel.exchangerates.presentation.entity.RateShow
+import br.com.mxel.exchangerates.domain.rates.entity.CurrencyCode
+import br.com.mxel.exchangerates.domain.rates.entity.Rate
+import br.com.mxel.exchangerates.presentation.rates.ExchangeViewModel
+import br.com.mxel.exchangerates.presentation.rates.entity.RateShow
 import br.com.mxel.exchangerates.testModule
 import io.mockk.confirmVerified
 import io.mockk.impl.annotations.RelaxedMockK

@@ -1,4 +1,4 @@
-package br.com.mxel.exchangerates.presentation
+package br.com.mxel.exchangerates.presentation.rates
 
 import android.os.Bundle
 import android.widget.ProgressBar
@@ -10,9 +10,9 @@ import androidx.recyclerview.widget.RecyclerView
 import br.com.mxel.exchangerates.R
 import br.com.mxel.exchangerates.data.remote.RemoteError
 import br.com.mxel.exchangerates.domain.State
-import br.com.mxel.exchangerates.presentation.entity.ExchangeShow
 import br.com.mxel.exchangerates.presentation.extension.setVisibility
-import br.com.mxel.exchangerates.presentation.widget.RateAdapter
+import br.com.mxel.exchangerates.presentation.rates.entity.ExchangeShow
+import br.com.mxel.exchangerates.presentation.rates.widget.RateAdapter
 import io.reactivex.disposables.CompositeDisposable
 import org.koin.android.scope.currentScope
 import org.koin.android.viewmodel.ext.android.viewModel

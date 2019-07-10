@@ -1,8 +1,8 @@
-package br.com.mxel.exchangerates.data.remote.response
+package br.com.mxel.exchangerates.data.rates.remote.response
 
 import br.com.mxel.exchangerates.domain.ToDomainMapper
-import br.com.mxel.exchangerates.domain.entity.CurrencyCode
-import br.com.mxel.exchangerates.domain.entity.Rate
+import br.com.mxel.exchangerates.domain.rates.entity.CurrencyCode
+import br.com.mxel.exchangerates.domain.rates.entity.Rate
 import com.squareup.moshi.Json
 import kotlin.reflect.full.memberProperties
 

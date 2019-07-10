@@ -1,15 +1,15 @@
 package br.com.mxel.exchangerates.presentation.di
 
 import br.com.mxel.exchangerates.BuildConfig
-import br.com.mxel.exchangerates.data.ExchangeRepository
-import br.com.mxel.exchangerates.data.remote.API_BASE_PATH
-import br.com.mxel.exchangerates.data.remote.ApiClient
+import br.com.mxel.exchangerates.data.rates.ExchangeRepository
+import br.com.mxel.exchangerates.data.rates.remote.API_BASE_PATH
+import br.com.mxel.exchangerates.data.rates.remote.ApiClient
 import br.com.mxel.exchangerates.data.remote.RemoteClientFactory
-import br.com.mxel.exchangerates.domain.ExchangeDataSource
 import br.com.mxel.exchangerates.domain.SchedulerProvider
-import br.com.mxel.exchangerates.domain.usecase.GetExchangeRatesPeriodically
-import br.com.mxel.exchangerates.presentation.ExchangeActivity
-import br.com.mxel.exchangerates.presentation.ExchangeViewModel
+import br.com.mxel.exchangerates.domain.rates.ExchangeDataSource
+import br.com.mxel.exchangerates.domain.rates.usecase.GetExchangeRatesPeriodically
+import br.com.mxel.exchangerates.presentation.rates.ExchangeActivity
+import br.com.mxel.exchangerates.presentation.rates.ExchangeViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import org.koin.android.experimental.dsl.viewModel

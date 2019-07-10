@@ -12,7 +12,7 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/ExchangeTheme">
-        <activity android:name=".presentation.ExchangeActivity">
+        <activity android:name=".presentation.rates.ExchangeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <action android:name="android.intent.action.VIEW"/>

@@ -1,11 +1,11 @@
-package br.com.mxel.exchangerates.presentation
+package br.com.mxel.exchangerates.presentation.rates
 
 import androidx.lifecycle.*
 import br.com.mxel.exchangerates.domain.SchedulerProvider
 import br.com.mxel.exchangerates.domain.State
-import br.com.mxel.exchangerates.domain.entity.CurrencyCode
-import br.com.mxel.exchangerates.domain.usecase.GetExchangeRatesPeriodically
-import br.com.mxel.exchangerates.presentation.entity.ExchangeShow
+import br.com.mxel.exchangerates.domain.rates.entity.CurrencyCode
+import br.com.mxel.exchangerates.domain.rates.usecase.GetExchangeRatesPeriodically
+import br.com.mxel.exchangerates.presentation.rates.entity.ExchangeShow
 import br.com.mxel.exchangerates.presentation.util.EspressoIdlingResource
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo

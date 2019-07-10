@@ -1,6 +1,6 @@
-package br.com.mxel.exchangerates.data.remote
+package br.com.mxel.exchangerates.data.rates.remote
 
-import br.com.mxel.exchangerates.data.remote.response.ExchangeApi
+import br.com.mxel.exchangerates.data.rates.remote.response.ExchangeApi
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Query

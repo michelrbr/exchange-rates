@@ -1,11 +1,11 @@
-package br.com.mxel.exchangerates.domain.usecase
+package br.com.mxel.exchangerates.domain.rates.usecase
 
 import br.com.mxel.exchangerates.BaseTest
-import br.com.mxel.exchangerates.domain.ExchangeDataSource
 import br.com.mxel.exchangerates.domain.State
-import br.com.mxel.exchangerates.domain.entity.CurrencyCode
-import br.com.mxel.exchangerates.domain.entity.Exchange
-import br.com.mxel.exchangerates.domain.entity.Rate
+import br.com.mxel.exchangerates.domain.rates.ExchangeDataSource
+import br.com.mxel.exchangerates.domain.rates.entity.CurrencyCode
+import br.com.mxel.exchangerates.domain.rates.entity.Exchange
+import br.com.mxel.exchangerates.domain.rates.entity.Rate
 import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.RelaxedMockK

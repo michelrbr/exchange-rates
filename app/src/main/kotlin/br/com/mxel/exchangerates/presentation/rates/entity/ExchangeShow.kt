@@ -1,7 +1,7 @@
-package br.com.mxel.exchangerates.presentation.entity
+package br.com.mxel.exchangerates.presentation.rates.entity
 
 import br.com.mxel.exchangerates.domain.FromDomainMapper
-import br.com.mxel.exchangerates.domain.entity.Exchange
+import br.com.mxel.exchangerates.domain.rates.entity.Exchange
 import java.text.SimpleDateFormat
 import java.util.*
 
