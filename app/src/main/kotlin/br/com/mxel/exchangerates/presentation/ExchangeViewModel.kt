@@ -9,12 +9,10 @@ import br.com.mxel.exchangerates.presentation.entity.ExchangeShow
 import br.com.mxel.exchangerates.presentation.util.EspressoIdlingResource
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
-import java.lang.IllegalArgumentException
 import java.util.*
 import java.util.concurrent.TimeUnit
 
 class ExchangeViewModel(
-    private val lifecycleOwner: LifecycleOwner,
     private val scheduler: SchedulerProvider,
     private val getCurrencyExchangePeriodically: GetExchangeRatesPeriodically
 ) : ViewModel(), LifecycleObserver {
@@ -47,12 +45,10 @@ class ExchangeViewModel(
         } catch (ie: IllegalArgumentException) {
             CurrencyCode.EUR
         }
-        lifecycleOwner.lifecycle.addObserver(this)
         EspressoIdlingResource.increment()
     }
 
     override fun onCleared() {
-        lifecycleOwner.lifecycle.removeObserver(this)
         onClearDisposable()
     }
 

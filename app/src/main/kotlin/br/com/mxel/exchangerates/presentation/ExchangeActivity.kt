@@ -14,14 +14,14 @@ import br.com.mxel.exchangerates.presentation.entity.ExchangeShow
 import br.com.mxel.exchangerates.presentation.extension.setVisibility
 import br.com.mxel.exchangerates.presentation.widget.RateAdapter
 import io.reactivex.disposables.CompositeDisposable
+import org.koin.android.scope.currentScope
 import org.koin.android.viewmodel.ext.android.viewModel
-import org.koin.core.parameter.parametersOf
 
 class ExchangeActivity : AppCompatActivity() {
 
     private val disposable = CompositeDisposable()
 
-    private val viewModel: ExchangeViewModel by viewModel { parametersOf(this) }
+    private val viewModel: ExchangeViewModel by currentScope.viewModel(this)
 
     private val rateAdapter: RateAdapter by lazy { RateAdapter() }
 
@@ -43,6 +43,15 @@ class ExchangeActivity : AppCompatActivity() {
         viewModel.exchange.observe(this, Observer { showExchangeRates(it) })
         viewModel.error.observe(this, Observer { showErrorState(it) })
         viewModel.loading.observe(this, Observer { if (it) showLoadingState() })
+
+        lifecycle.addObserver(viewModel)
+    }
+
+    override fun onDestroy() {
+
+        disposable.clear()
+        lifecycle.removeObserver(viewModel)
+        super.onDestroy()
     }
 
     private fun showErrorState(error: State.Error?) {
@@ -84,11 +93,5 @@ class ExchangeActivity : AppCompatActivity() {
         baseCurrencyLabel?.setVisibility(false)
         rateList?.setVisibility(false)
         loading?.setVisibility(true)
-    }
-
-    override fun onDestroy() {
-
-        disposable.clear()
-        super.onDestroy()
     }
 }

@@ -1,6 +1,5 @@
 package br.com.mxel.exchangerates
 
-import androidx.lifecycle.LifecycleOwner
 import br.com.mxel.exchangerates.data.ExchangeRepository
 import br.com.mxel.exchangerates.data.remote.API_BASE_PATH
 import br.com.mxel.exchangerates.data.remote.ApiClient
@@ -20,7 +19,7 @@ import org.koin.experimental.builder.singleBy
 
 val testModule = module {
 
-    viewModel { (lifecycleOwner: LifecycleOwner) -> ExchangeViewModel(lifecycleOwner, get(), get()) }
+    viewModel { ExchangeViewModel(get(), get()) }
 
     single<GetExchangeRatesPeriodically>()
 
