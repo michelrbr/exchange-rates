@@ -15,7 +15,7 @@ class RateViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     fun bindItem(rate: RateShow) {
 
         currencyName.text = rate.currencyName
-        currentCurrencyAmount.text = rate.amountRep
-        baseCurrencyAmount.text = rate.amountRep
+        currentCurrencyAmount.text = rate.currentCurrentAmount
+        baseCurrencyAmount.text = rate.baseCurrentAmount
     }
 }

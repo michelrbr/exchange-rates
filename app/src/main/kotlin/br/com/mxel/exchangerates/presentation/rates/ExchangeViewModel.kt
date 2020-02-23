@@ -6,6 +6,7 @@ import br.com.mxel.exchangerates.domain.State
 import br.com.mxel.exchangerates.domain.rates.entity.CurrencyCode
 import br.com.mxel.exchangerates.domain.rates.usecase.GetExchangeRatesPeriodically
 import br.com.mxel.exchangerates.presentation.rates.entity.ExchangeShow
+import br.com.mxel.exchangerates.presentation.rates.entity.mapper.exchangeToExchangeShow
 import br.com.mxel.exchangerates.presentation.util.EspressoIdlingResource
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
@@ -66,7 +67,7 @@ class ExchangeViewModel(
             .map {
                 // Map to presentation entity
                 when (it) {
-                    is State.Data -> State.data(ExchangeShow.fromDomain(it.data))
+                    is State.Data -> State.data(exchangeToExchangeShow(it.data))
                     is State.Error -> State.error(it.error, it.cause)
                     is State.Loading -> State.loading()
                     else -> State.idle()
