@@ -7,7 +7,7 @@ import br.com.mxel.exchangerates.domain.rates.ExchangeDataSource
 import br.com.mxel.exchangerates.domain.rates.entity.CurrencyCode
 import br.com.mxel.exchangerates.domain.rates.entity.Exchange
 import br.com.mxel.exchangerates.domain.rates.entity.Rate
-import br.com.mxel.exchangerates.testModule
+import br.com.mxel.exchangerates.presentation.di.testModule
 import org.junit.Rule
 import org.junit.Test
 import org.koin.core.context.startKoin

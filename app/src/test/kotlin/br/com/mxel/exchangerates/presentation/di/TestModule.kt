@@ -1,4 +1,4 @@
-package br.com.mxel.exchangerates
+package br.com.mxel.exchangerates.presentation.di
 
 import br.com.mxel.exchangerates.data.rates.ExchangeRepository
 import br.com.mxel.exchangerates.data.rates.remote.API_BASE_PATH

@@ -10,10 +10,8 @@ import br.com.mxel.exchangerates.domain.rates.entity.CurrencyCode
 import br.com.mxel.exchangerates.domain.rates.entity.Exchange
 import br.com.mxel.exchangerates.domain.rates.entity.Rate
 import br.com.mxel.exchangerates.presentation.rates.ExchangeViewModel
-import br.com.mxel.exchangerates.presentation.rates.entity.RateShow
 import br.com.mxel.exchangerates.presentation.rates.entity.mapper.exchangeToExchangeShow
-import br.com.mxel.exchangerates.presentation.rates.entity.mapper.rateToRateShow
-import br.com.mxel.exchangerates.testModule
+import br.com.mxel.exchangerates.presentation.di.testModule
 import io.mockk.confirmVerified
 import io.mockk.impl.annotations.RelaxedMockK
 import io.mockk.verifySequence
