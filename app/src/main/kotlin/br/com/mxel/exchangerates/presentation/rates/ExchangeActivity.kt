@@ -15,7 +15,7 @@ import br.com.mxel.exchangerates.presentation.rates.entity.ExchangeShow
 import br.com.mxel.exchangerates.presentation.rates.widget.RateAdapter
 import io.reactivex.disposables.CompositeDisposable
 import org.koin.android.scope.currentScope
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.android.viewmodel.scope.viewModel
 
 class ExchangeActivity : AppCompatActivity() {
 

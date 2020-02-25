@@ -25,7 +25,7 @@ private val moshi by lazy { Moshi.Builder().add(KotlinJsonAdapterFactory()).buil
 
 private fun parseError(error: HttpException): ErrorApi? {
 
-    val json = error.response().errorBody()?.string() ?: ""
+    val json = error.response()?.errorBody()?.string() ?: ""
 
     return try {
         moshi.adapter<ErrorApi>(ErrorApi::class.java).fromJson(json)

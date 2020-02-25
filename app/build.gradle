@@ -39,10 +39,10 @@ dependencies {
 
     // Android
     implementation "androidx.appcompat:appcompat:$appcompatVersion"
-    implementation "androidx.recyclerview:recyclerview:$androidSupportVersion"
+    implementation "androidx.recyclerview:recyclerview:$recyclerViewVersion"
     implementation "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
     implementation "androidx.lifecycle:lifecycle-extensions:$androidLifecycleVersion"
-    kapt "androidx.lifecycle:lifecycle-compiler:$androidLifecycleVersion"
+    annotationProcessor "androidx.lifecycle:lifecycle-compiler:$androidLifecycleVersion"
 
     // DI
     implementation "org.koin:koin-core:$koinVersion"

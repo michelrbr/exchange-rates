@@ -1,6 +1,8 @@
 package br.com.mxel.exchangerates.data.remote
 
 import okhttp3.*
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.ResponseBody.Companion.toResponseBody
 import java.io.File
 
 abstract class BaseTestInterceptor : Interceptor {
@@ -25,7 +27,7 @@ abstract class BaseTestInterceptor : Interceptor {
             .message(code.takeIf { it == 200 }?.let { "OK" } ?: "Error")
             .request(request)
             .protocol(Protocol.HTTP_1_0)
-            .body(ResponseBody.create(MediaType.parse("application/json"), body))
+            .body(body.toResponseBody("application/json".toMediaTypeOrNull()))
             .addHeader("content-type", "application/json")
             .build()
     }
