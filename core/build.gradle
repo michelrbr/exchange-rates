@@ -1,0 +1,37 @@
+apply plugin: 'kotlin'
+
+task jarTest(type: Jar) {
+    from sourceSets.test.output
+    classifier = 'test'
+}
+
+configurations {
+    testOutput
+}
+
+artifacts {
+    testOutput jarTest
+}
+
+dependencies {
+    // Kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+
+    // RX
+    implementation "io.reactivex.rxjava2:rxjava:$rxjavaVersion"
+
+    // HTTP Networking
+    implementation "com.squareup.okhttp3:okhttp:$okhttpVersion"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttpVersion"
+    implementation "com.squareup.moshi:moshi-kotlin:$moshiVersion"
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-moshi:$retrofitVersion"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
+
+    // Test
+    testImplementation "junit:junit:$junitVersion"
+    testImplementation "io.mockk:mockk:$mockkVersion"
+}
+
+sourceCompatibility = "8"
+targetCompatibility = "8"

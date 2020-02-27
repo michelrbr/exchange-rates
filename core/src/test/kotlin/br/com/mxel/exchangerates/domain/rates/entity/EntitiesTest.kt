@@ -15,10 +15,22 @@ class EntitiesTest {
 
         val value = 1.34
 
-        val rateEUR = Rate(CurrencyCode.EUR, value)
-        val rateUSD = Rate(CurrencyCode.USD, value)
-        val ratePLN = Rate(CurrencyCode.PLN, value)
-        val rateBRL = Rate(CurrencyCode.BRL, value)
+        val rateEUR = Rate(
+            CurrencyCode.EUR,
+            value
+        )
+        val rateUSD = Rate(
+            CurrencyCode.USD,
+            value
+        )
+        val ratePLN = Rate(
+            CurrencyCode.PLN,
+            value
+        )
+        val rateBRL = Rate(
+            CurrencyCode.BRL,
+            value
+        )
 
         Assert.assertEquals(expectedEUR, rateEUR.toString())
         Assert.assertEquals(expectedUSD, rateUSD.toString())
