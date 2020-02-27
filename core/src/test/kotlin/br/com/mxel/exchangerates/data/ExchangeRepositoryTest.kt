@@ -1,34 +1,30 @@
 package br.com.mxel.exchangerates.data
 
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import br.com.mxel.exchangerates.BaseTest
+import br.com.mxel.exchangerates.data.rates.ExchangeRepository
+import br.com.mxel.exchangerates.data.rates.remote.API_BASE_PATH
+import br.com.mxel.exchangerates.data.rates.remote.ApiClient
+import br.com.mxel.exchangerates.data.remote.ExchangeTestInterceptor
+import br.com.mxel.exchangerates.data.remote.RemoteClientFactory
 import br.com.mxel.exchangerates.domain.State
-import br.com.mxel.exchangerates.domain.rates.ExchangeDataSource
 import br.com.mxel.exchangerates.domain.rates.entity.CurrencyCode
 import br.com.mxel.exchangerates.domain.rates.entity.Exchange
 import br.com.mxel.exchangerates.domain.rates.entity.Rate
-import br.com.mxel.exchangerates.presentation.di.testModule
-import org.junit.Rule
+import io.mockk.impl.annotations.InjectMockKs
 import org.junit.Test
-import org.koin.core.context.startKoin
-import org.koin.core.context.stopKoin
-import org.koin.test.KoinTest
-import org.koin.test.inject
 import java.text.SimpleDateFormat
 import java.util.*
 
-class ExchangeRepositoryTest : BaseTest(), KoinTest {
+class ExchangeRepositoryTest : BaseTest() {
 
-    private val repository: ExchangeDataSource by inject()
+    private val remoteSource = RemoteClientFactory(
+        API_BASE_PATH,
+        ExchangeTestInterceptor(),
+        true
+    ).createClient(ApiClient::class)
 
-    @get:Rule
-    val rule = InstantTaskExecutorRule()
-
-    override fun initialize() {
-        startKoin { modules(testModule) }
-    }
-
-    override fun finish() = stopKoin()
+    @InjectMockKs
+    lateinit var repository: ExchangeRepository
 
     @Test
     fun `Exchange repository mapper test`() {
@@ -75,12 +71,12 @@ class ExchangeRepositoryTest : BaseTest(), KoinTest {
                 (state as? State.Data)?.let { data ->
 
                     data.data.base == expectedValue.base
-                    // Transform rate list into a boolean list and verify if all items is true
-                    && data.data.rates.map { rate ->
+                            // Transform rate list into a boolean list and verify if all items is true
+                            && data.data.rates.map { rate ->
                         rate == expectedValue.rates.find { it.currencyCode == rate.currencyCode }
                     }.reduce { acc, b -> acc && b }
 
-                    && data.data.date == expectedValue.date
+                            && data.data.date == expectedValue.date
                 } ?: false
             }
     }
